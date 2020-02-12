@@ -33,7 +33,7 @@ enum class Letters(val keyVal: String, val chars: String) {
     companion object {
         fun findValue(keyVal: String): String {
             var output = ""
-            for (enum in Letters.values()) {
+            for (enum in values()) {
                 if (keyVal == enum.keyVal) {
                     output = enum.chars
                 }
@@ -43,7 +43,7 @@ enum class Letters(val keyVal: String, val chars: String) {
     }
 }
 
-class SignatureBuilder(firstName: String, lastName: String, val status: String) {
+class SignatureBuilder(firstName: String, lastName: String, private val status: String) {
     private val fullName = "${firstName.toUpperCase()} ${lastName.toUpperCase()}"
     private var borderWidth = 0
 
@@ -83,8 +83,8 @@ class SignatureBuilder(firstName: String, lastName: String, val status: String) 
 
     private fun statusRowBuilder(): String {
         val statusBorderWidth = borderWidth - (2 + status.length)
-        var statusBorderLeft = 0
-        var statusBorderRight = 0
+        var statusBorderLeft: Int
+        var statusBorderRight: Int
         var statusRow = ""
         if (statusBorderWidth % 2 != 0) {
             statusBorderLeft = (statusBorderWidth - 1) / 2
