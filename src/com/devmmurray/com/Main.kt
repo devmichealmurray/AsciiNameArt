@@ -45,9 +45,9 @@ enum class Letters(val keyVal: String, val chars: String) {
 
 class SignatureBuilder(firstName: String, lastName: String, val status: String) {
     private val fullName = "${firstName.toUpperCase()} ${lastName.toUpperCase()}"
-    var borderWidth = 0
+    private var borderWidth = 0
 
-    fun buildString(rowNumber: Int): String {
+    private fun buildString(rowNumber: Int): String {
         var rowString = "*  "
         var rowIdentifier = ""
         when (rowNumber) {
@@ -67,10 +67,12 @@ class SignatureBuilder(firstName: String, lastName: String, val status: String) 
         }
         rowString += " *"
         borderWidth = if (status.length + 6 > rowString.length) status.length + 6 else rowString.length
+
         return rowString
     }
 
-    fun borderBuilder(): String {
+
+    private fun borderBuilder(): String {
         var border = ""
         repeat(borderWidth) {
             border += "*"
@@ -78,8 +80,9 @@ class SignatureBuilder(firstName: String, lastName: String, val status: String) 
         return border
     }
 
-    fun statusRowBuilder(): String {
-        var statusBorderWidth = borderWidth - (2 + status.length)
+
+    private fun statusRowBuilder(): String {
+        val statusBorderWidth = borderWidth - (2 + status.length)
         var statusBorderLeft = 0
         var statusBorderRight = 0
         var statusRow = ""
@@ -91,8 +94,8 @@ class SignatureBuilder(firstName: String, lastName: String, val status: String) 
             statusBorderRight = statusBorderWidth / 2
         }
         if ((status.length % 2 != 0) && (statusBorderWidth % 2 == 0)) {
-            statusBorderLeft -= 1
-            statusBorderRight += 1
+            statusBorderLeft += 1
+            statusBorderRight -= 1
         }
         statusRow += "*"
         repeat(statusBorderLeft) {
@@ -105,7 +108,6 @@ class SignatureBuilder(firstName: String, lastName: String, val status: String) 
         statusRow += "*"
         return statusRow
     }
-
 
 
     fun printSignature() {
